@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Vue 3 example</title>
+  <script src="https://unpkg.com/vue@3"></script>
+  <style>
+    .can {
+      color: green;
+    }
+    .cannot {
+      color: red;
+    }
+  </style>
+</head>
+<body>
+  <div id="app">
+    <div>{{ areWeDone ? 'Your score: ' + score : 'Next question' }}</div>
+
+    <div v-if="!areWeDone">
+      <div>{{ currentQuestion }}</div>
+      <input type="text" v-model="answer" />
+    </div>
+  </div>
+
+  <script>
+    const { createApp, ref, computed } = Vue;
+
+    createApp({
+      setup() {
+        // Dữ liệu gốc câu hỏi
+        const questions = [
+          "What is 2 + 2?",
+          "What is the capital of Vietnam?",
+          "What color is the sun?"
+        ];
+
+        const answers = ["4", "Hanoi", "Yellow"];
+
+        const score = ref(0);
+        const current = ref(0);
+        const answer = ref("");
+
+        const currentQuestion = computed(() => questions[current.value]);
+        const areWeDone = computed(() => current.value >= questions.length);
+
+        const check = () => {
+          if (areWeDone.value) {
+            clearInterval(interval);
+            return;
+          }
+
+          if (answer.value.trim().toLowerCase() === answers[current.value].toLowerCase()) {
+            score.value++;
+          }
+
+          answer.value = "";
+          current.value++;
+
+          if (areWeDone.value) {
+            clearInterval(interval);
+          }
+        };
+
+        const interval = setInterval(check, 4000);
+
+        return {
+          currentQuestion,
+          answer,
+          areWeDone,
+          score
+        };
+      }
+    }).mount('#app');
+  </script>
+</body>
+</html>

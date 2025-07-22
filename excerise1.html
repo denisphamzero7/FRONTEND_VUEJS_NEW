@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vue 3 example</title>
+    <script src="https://unpkg.com/vue@3"></script>
+    <style>
+      .can{
+        color: green;
+      }
+      .cannot{
+        color: red;
+      }
+    </style>
+</head>
+<body >
+   <div id="app">
+<h1>message :{{message}}</h1>
+<input type="text" v-model="age">
+<p>{{age}}</p>
+<div>Can you drive: <span :class="{can:canDriver==='Yes',cannot:canDriver==='No'}">{{canDriver}}</span></div>
+
+   </div>
+    <script>
+        const {createApp,ref,computed}=Vue;
+        createApp({
+            setup(){
+               message=ref('hello')
+               age=ref(null)
+               canDriver=computed(()=>{
+                console.log('computed');
+                return age.value >= 18?'Yes':'No'
+               })
+               setTimeout(()=>{
+                console.log('change');
+                age.value=18
+                message.value='bye'
+               },5000)
+                return {
+                    message,age,canDriver
+                }
+            }
+        }).mount('#app')
+    </script>
+</body>
+</html>
