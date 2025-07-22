@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Simple Task Manager</title>
+  <script src="https://unpkg.com/vue@3"></script>
+</head>
+<body>
+  <div id="app">
+  
+    <input v-model="newTask" placeholder="Task name" @keyup.enter="addTask">
+    <select v-model="newPriority">
+      <option disabled value="">Priority</option>
+      <option>High</option>
+      <option>Medium</option>
+      <option>Low</option>
+    </select>
+    <button @click="addTask">Add</button>
+
+
+    <br><input v-model="filterText" placeholder="Filter tasks">
+
+
+    <ul>
+      <li v-for="t in filtered" :key="t.id">
+        [{{ t.priority }}] {{ t.text }}
+        <button @click="removeTask(t.id)">x</button>
+      </li>
+    </ul>
+  </div>
+
+  <script>
+    const { createApp, ref, computed, onMounted, watch } = Vue;
+    createApp({
+      setup() {
+        const STORAGE_KEY = 'tasks';
+        const newTask = ref('');
+        const newPriority = ref('');
+        const filterText = ref('');
+        const tasks = ref([]);
+
+        onMounted(() => {
+          const saved = localStorage.getItem(STORAGE_KEY);
+          if (saved) tasks.value = JSON.parse(saved);
+        });
+
+        watch(tasks, () => {
+          localStorage.setItem(STORAGE_KEY, JSON.stringify(tasks.value));
+        }, { deep: true });
+
+        const addTask = () => {
+          const text = newTask.value.trim();
+          const prio = newPriority.value;
+          if (!text || !prio) return;
+          tasks.value.push({
+            id: Date.now(),
+            text,
+            priority: prio
+          });
+          newTask.value = '';
+          newPriority.value = '';
+        };
+
+        const removeTask = id => {
+          tasks.value = tasks.value.filter(t => t.id !== id);
+        };
+
+        const filtered = computed(() => {
+          const q = filterText.value.trim().toLowerCase();
+          return tasks.value.filter(t =>
+            t.text.toLowerCase().includes(q) ||
+            t.priority.toLowerCase().includes(q)
+          );
+        });
+
+        return { newTask, newPriority, filterText, tasks, addTask, removeTask, filtered };
+      }
+    }).mount('#app');
+  </script>
+</body>
+</html>
