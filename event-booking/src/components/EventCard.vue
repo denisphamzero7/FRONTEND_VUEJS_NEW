@@ -21,7 +21,7 @@
 
 <script setup>
 import RoundButton from '@/components/RoundButton.vue';
-import SectionCard from './SectionCard.vue';
+import SectionCard from '@/components/SectionCard.vue';
 
 defineProps({
   title: String,
