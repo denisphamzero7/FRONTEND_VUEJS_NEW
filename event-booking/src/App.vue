@@ -3,20 +3,11 @@
 import EventList from '@/components/EventList.vue'
 import BookingItem from '@/components/BookingItem.vue'
 import LoadingBookingCard from '@/components/LoadingBookingCard.vue'
-import {onMounted, ref} from 'vue'
+import {onMounted} from 'vue'
+import useBookings from '@/composable/useBooking.js'
+const {loading,bookings,fetchBookings} = useBookings();
 
-const bookings = ref([])
-const bookingLoading =ref(false)
-const fetchBookings =async()=>{
-  bookingLoading.value=true
-  try {
-  const response = await fetch('http://localhost:3001/bookings')
-  bookings.value= await  response.json()
-  console.log( ' logKbokhu:',bookings.value);
-  } finally {
-    bookingLoading.value=false
-  }
-}
+
 const findBookingId =(id)=> bookings.value.findIndex(
     (b)=>b.id === id);
 
@@ -84,7 +75,7 @@ onMounted(()=>fetchBookings())
 
     <h1 class="text-2xl font-medium">your Bookings</h1>
     <section class="grid grid-cols-1 gap-8">
-      <template v-if="!bookingLoading">
+      <template v-if="!loading">
         <booking-item v-for="booking in bookings" :key="booking.id" :title ="booking.eventTitle" :status="booking.status"  @cancel="cancel(booking.id)" />
       </template>
       <template v-else><LoadingBookingCard  v-for="i in 4" :key="i"/></template>
