@@ -1,7 +1,7 @@
 <template>
- <SectionCard>
- <div>
- {{ eventTitle}}
+ <SectionCard class="">
+ <div class="flex justify-between">
+ {{ title}}
  </div>
 <RoundButton variant="danger" @click="$emit('cancel')">
   Cancel
@@ -13,7 +13,7 @@
 import SectionCard from '@/components/SectionCard.vue'
 import RoundButton from '@/components/RoundButton.vue'
 defineProps({
-  eventTitle:String,
+  title:String,
 })
 </script>
 

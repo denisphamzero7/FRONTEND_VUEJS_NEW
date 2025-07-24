@@ -71,7 +71,7 @@ onMounted(()=>{fetchEvent(),fetchBookings()})
     <h1 class="text-2xl font-medium">your Bookings</h1>
     <section class="grid grid-cols-1 gap-8">
       <template v-if="!bookingLoading">
-        <booking-item v-for="booking in bookings" :key="booking.id" :eventTitle ="eventTitle" @cancel="cancel(booking.id)" />
+        <booking-item v-for="booking in bookings" :key="booking.id" :title ="booking.eventTitle" @cancel="cancel(booking.id)" />
       </template>
       <template v-else><LoadingBookingCard  v-for="i in 4" :key="i"/></template>
     </section>
