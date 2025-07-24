@@ -1,23 +1,12 @@
 <script setup>
-import EventCard from '@/components/EventCard.vue'
+
+import EventList from '@/components/EventList.vue'
 import BookingItem from '@/components/BookingItem.vue'
-import LoadingEventCard from '@/components/LoadingEventCard.vue'
 import LoadingBookingCard from '@/components/LoadingBookingCard.vue'
 import {onMounted, ref} from 'vue'
-const events=ref([])
+
 const bookings = ref([])
 const bookingLoading =ref(false)
-const eventsloading=ref(false)
-const fetchEvent =async()=>{
-  eventsloading.value=true
-  try {
-  const response = await fetch('http://localhost:3001/events')
-  events.value= await  response.json()
-  console.log(events.value);
-  } finally {
-    eventsloading.value=false
-  }
-}
 const fetchBookings =async()=>{
   bookingLoading.value=true
   try {
@@ -30,6 +19,23 @@ const fetchBookings =async()=>{
 }
 const findBookingId =(id)=> bookings.value.findIndex(
     (b)=>b.id === id);
+
+const cancel = async(bookingId)=>{
+  const index = findBookingId(bookingId);
+const orinalBooking = bookings.value[index];
+bookings.value.splice(index,1);
+  try {
+  const response =await fetch(`http://localhost:3001/bookings/${bookingId}`,{
+      method:'DELETE'
+  });
+  if(!response.ok){
+    throw new Error('Booking could not be cancelled');
+  }
+  } catch (error) {
+    console.error(`Fail cancel booking:`,error)
+    bookings.value.splice(index,0, orinalBooking)
+  }
+}
 const register = async(event)=>{
   if(bookings.value.some((booking)=>booking.eventId === event.id && booking.userId===1)){
     alert('you are already registered for this event')
@@ -67,42 +73,14 @@ bookings.value.filter((b)=>b.id != newBooking.id)
  }
 
 }
-const cancel = async(bookingId)=>{
-  const index = findBookingId(bookingId);
-const orinalBooking = bookings.value[index];
-bookings.value.splice(index,1);
-  try {
-  const response =await fetch(`http://localhost:3001/bookings/${bookingId}`,{
-      method:'DELETE'
-  });
-  if(!response.ok){
-    throw new Error('Booking could not be cancelled');
-  }
-  } catch (error) {
-    console.error(`Fail cancel booking:`,error)
-    bookings.value.splice(index,0, orinalBooking)
-  }
-}
-onMounted(()=>{fetchEvent(),fetchBookings()})
+onMounted(()=>fetchBookings())
 </script>
 
 <template>
   <main class="container mx-auto my-8 space-y-8 bg-green-100">
     <h1 class="text-4xl font-medium">event booking app</h1>
     <h1 class="text-2xl font-medium">All event</h1>
-    <section class="grid grid-cols-2 gap-8">
-      <template v-if="!eventsloading">
-        <event-card
-        v-for="event in events"
-        :key="event.id"
-        :title="event.title"
-        :when="event.date"
-        :description="event.description"
-        @register="register(event)"
-      />
-      </template>
-      <template v-else><LoadingEventCard v-for="i in 4" :key="i"/></template>
-    </section>
+  <event-list @register="register($event)"/>
 
     <h1 class="text-2xl font-medium">your Bookings</h1>
     <section class="grid grid-cols-1 gap-8">
