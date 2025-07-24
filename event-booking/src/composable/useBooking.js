@@ -2,15 +2,20 @@ import {ref} from 'vue';
 
 const bookings = ref([])
 const events=ref([])
+const error = ref(null)
 const loading =ref(false)
 const EventLoading =ref(false)
 const fetchBookings =async()=>{
  loading.value=true
+ error.value=null
   try {
   const response = await fetch('http://localhost:3001/bookings')
   bookings.value= await  response.json()
   console.log( ' logKbokhu:',bookings.value);
-  } finally {
+  }catch (e){
+     error.value=e;
+  }
+  finally {
     loading.value=false
   }
 }
@@ -82,6 +87,6 @@ const fetchEvent =async()=>{
  }
 export default function useBookings(){
   return {
-    bookings,events,loading,EventLoading,fetchBookings,findBookingId,cancel,register,fetchEvent
+    bookings,events,loading,EventLoading,error,fetchBookings,findBookingId,cancel,register,fetchEvent
   }
 }
