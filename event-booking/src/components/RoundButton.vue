@@ -1,7 +1,7 @@
 <template>
   <button
     :class="['text-sm font-medium border  rounded-full px-3 py-1',Variants[variant]?? Variants.default] "
-    @click="$emit('click')"
+    @click="$emit('click')" type="button"
   >
    <slot></slot>
   </button>
