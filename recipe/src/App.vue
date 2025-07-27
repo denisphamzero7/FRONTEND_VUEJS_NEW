@@ -6,27 +6,27 @@ import { RouterLink, RouterView } from 'vue-router';
 <template>
   <header>
     <nav>
-      <ul class="flex gap-4">
+      <ul class="flex gap-4 p-8 bg-orange-200">
         <li>
           <RouterLink :to="{ name: 'home' }" v-slot="{ isActive }">
-            <span :class="{ isActive }">Home </span>
+            <span :class="{ isActive }" >Home </span>
           </RouterLink>
         </li>
         <li>
           <RouterLink :to="{ name: 'favorites' }" v-slot="{ isActive }">
-            <span :class="{ isActive }">Favorites</span>
+            <span :class="{ isActive }" >Favorites</span>
           </RouterLink>
         </li>
         <li>
           <RouterLink :to="{ name: 'addrecipe' }" v-slot="{ isActive }">
-            <span :class="{ isActive }">Add Recipe</span>
+            <span :class="{ isActive }" >Add Recipe</span>
           </RouterLink>
         </li>
-        <li>
+        <!-- <li>
           <RouterLink :to="{ name: 'about' }" v-slot="{ isActive }">
             <span :class="{ isActive }">About</span>
           </RouterLink>
-        </li>
+        </li> -->
       </ul>
     </nav>
   </header>
