@@ -8,6 +8,11 @@ import { RouterLink, RouterView } from 'vue-router';
     <nav>
       <ul class="flex gap-4">
         <li>
+          <RouterLink :to="{ name: 'home' }" v-slot="{ isActive }">
+            <span :class="{ isActive }">Home </span>
+          </RouterLink>
+        </li>
+        <li>
           <RouterLink :to="{ name: 'favorites' }" v-slot="{ isActive }">
             <span :class="{ isActive }">Favorites</span>
           </RouterLink>
