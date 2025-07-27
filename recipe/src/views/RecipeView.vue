@@ -1,5 +1,6 @@
 <template>
-    <nav>
+    <div>
+      <nav>
       <h1>recipe:{{ $route.params.id }}</h1>
       <ul>
         <li>
@@ -8,17 +9,30 @@
         </li>
       </ul>
     </nav>
+    <h1>{{ recipe?.name }}</h1>
+    <h2>{{ recipe?.description }}</h2>
+    <div>
+      <RouterLink :to="{ name: 'edit-recipe', params: { id: recipe?.id } }">Edit</RouterLink>
+    </div>
+    </div>
 
 
 
 </template>
 
 <script setup lang="ts">
-import { onMounted, watch } from 'vue';
+import { useRecipeStore } from '@/stores/repice';
+import { computed, onMounted, watch } from 'vue';
 import { RouterLink, useRoute } from 'vue-router';
 const route = useRoute()
-console.log('lấy param: ',route.params.id);
-watch(()=>route.params.id,()=> console.log('fetching data'),{deep:true})
+
+
+const recipeStore = useRecipeStore()
+const recipe = computed(()=>recipeStore.getRecipeById(route.params.id as string))
+// console.log('lấy param: ',route.params.id);
+// watch(()=>route.params.id,()=> console.log('fetching data'),{deep:true})
+
+
 // onMounted(()=>{
 //   console.log('fetch data')
 // })

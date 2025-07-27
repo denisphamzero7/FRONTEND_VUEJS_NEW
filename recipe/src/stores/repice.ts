@@ -27,9 +27,18 @@ export const useRecipeStore = defineStore('recipe', () => {
     recipes.value.push(newRecipe);
     return newRecipe; // trả về để có thể điều hướng hoặc xử lý tiếp
   };
+  const getRecipeById=(id:string)=>recipes.value.find((recipe)=>recipe.id===id)
+  const editRecipe = (updatedRecipe: Recipe) => {
+    const index = recipes.value.findIndex((recipe) => recipe.id === updatedRecipe.id);
+    if (index !== -1) {
+      recipes.value[index] = updatedRecipe;
+    }
+  };
 
   return {
     recipes,   // state: danh sách công thức
-    addRecipe // action: thêm công thức và trả về recipe mới
+    addRecipe,
+    editRecipe, // action: thêm công thức và trả về recipe mới
+    getRecipeById // getter
   };
 });

@@ -5,6 +5,7 @@ import FavoritesView from '@/views/FavoritesView.vue';
 import AddRecipeView from '@/views/AddRecipeView.vue';
 import RecipeView from '@/views/RecipeView.vue'
 import NoFoundView from '@/views/NoFoundView.vue'
+import EditRecipeView from '@/views/EditRecipeView.vue';
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
@@ -37,6 +38,11 @@ const router = createRouter({
       path: '/:pathMath(.*)*',
       name: 'not-found',
       component: NoFoundView,
+    },
+    {
+      path: '/recipe/:id/edit',
+      name: 'edit-recipe',
+      component: EditRecipeView
     },
   ],
 });
