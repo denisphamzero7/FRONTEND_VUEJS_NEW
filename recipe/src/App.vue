@@ -1,42 +1,28 @@
 <script setup lang="ts">
 import { ref } from 'vue';
 import { RouterLink, RouterView } from 'vue-router';
+const isActive = ref(false)
+
 </script>
 
 <template>
-  <header>
+  <div class="h-full bg-gray-200 min-h-screen" >
+    <header>
     <nav>
-      <ul class="flex gap-4 p-8 bg-orange-200">
-        <li>
-          <RouterLink :to="{ name: 'home' }" v-slot="{ isActive }">
-            <span :class="{ isActive }" >Home </span>
-          </RouterLink>
+      <ul>
+        <li class=" flex justify-center gap-4 bg-yellow-200 text-2xl font-medium">
+          <RouterLink :to="{name:'home'}">Home</RouterLink>
+          <RouterLink  :to="{name:'favorites'}">Favorites</RouterLink>
+          <RouterLink :to="{name:'addrecipe'}">Add Recipe</RouterLink>
+          <!-- <RouterLink :to="{name:'about'}">Favorites</RouterLink> -->
         </li>
-        <li>
-          <RouterLink :to="{ name: 'favorites' }" v-slot="{ isActive }">
-            <span :class="{ isActive }" >Favorites</span>
-          </RouterLink>
-        </li>
-        <li>
-          <RouterLink :to="{ name: 'addrecipe' }" v-slot="{ isActive }">
-            <span :class="{ isActive }" >Add Recipe</span>
-          </RouterLink>
-        </li>
-        <!-- <li>
-          <RouterLink :to="{ name: 'about' }" v-slot="{ isActive }">
-            <span :class="{ isActive }">About</span>
-          </RouterLink>
-        </li> -->
       </ul>
     </nav>
   </header>
-
   <RouterView />
+  </div>
 </template>
 
 <style scoped>
-.isActive {
-  color: rgb(0, 255, 213);
-  font-weight: bold;
-}
+
 </style>

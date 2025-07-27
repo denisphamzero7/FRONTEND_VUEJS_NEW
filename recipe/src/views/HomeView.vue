@@ -1,23 +1,30 @@
 <template>
   <div>
-    <main>
-      <h1>recipe Home</h1>
+    <main class="mx-auto container p-4 space-y-6">
+      <h1 class="text-2xl font-bold text-gray-800">recipe Home</h1>
+
       <div>
-        <input type="text" v-model="searchQuery" />
+        <input
+          type="text"
+          v-model="searchQuery"
+          class="w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring focus:border-blue-300"
+        />
       </div>
-      <!-- <nav>
-        <RouterLink :to="{name:'recipe',params:{id:1}}"> recipe1</RouterLink>
-        <RouterLink :to="{name:'recipe',params:{id:2}}"> recipe2</RouterLink>
-      </nav> -->
-      <nav v-if="filteredRecipes.length > 0">
-        <ul >
-          <li v-for="recipe in filteredRecipes" :key="recipe.id">
+
+      <!-- <nav v-if="filteredRecipes.length > 0">
+        <ul class="space-y-2">
+          <li
+            v-for="recipe in filteredRecipes"
+            :key="recipe.id"
+            class="text-blue-600 hover:underline"
+          >
             <RouterLink :to="{ name: 'recipe', params: { id: recipe.id } }">
-              {{ recipe.name }}</RouterLink
-            >
+              {{ recipe.name }}
+            </RouterLink>
           </li>
         </ul>
-      </nav>
+      </nav> -->
+
       <RecipeList :recipes="filteredRecipes" />
     </main>
   </div>

@@ -1,6 +1,6 @@
 <template>
-  <div>
-    <h1>Favorite Recipes</h1>
+  <div class="container mx-auto">
+    <h1 class="font-medium text-2xl ml-5">Favorite Recipes</h1>
     <RecipeList :recipes="store.favotiteRecipes" />
   </div>
 </template>
