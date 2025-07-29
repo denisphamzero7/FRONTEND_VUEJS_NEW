@@ -47,6 +47,7 @@ const closeModal = () => {
   editingCard.value = null
   editingListIndex.value = null
 }
+
 const saveCard = (card: Card) => {
   if (editingListIndex.value === null) return
 

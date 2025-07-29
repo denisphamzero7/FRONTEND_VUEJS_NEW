@@ -2,7 +2,7 @@
   <div>
     <div class="text-2xl mb-4">General</div>
 
-    <form action="" class="space-y-4 mx-auto">
+    <form action="" class="space-y-4 mx-auto" @submit.prevent="save">
 
       <div>
 
@@ -64,6 +64,10 @@
 
 <script setup lang="ts">
 import { useSettings } from '@/Composables/useSetting';
-
+import {useNotification} from '@/Composables/usenNotification'
 const { general } = useSettings()
+const {addNotification} =useNotification()
+const save = ()=>{
+  addNotification('Thành coong rồi')}
+
 </script>

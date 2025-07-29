@@ -20,7 +20,7 @@
 
 
 
-    <button type="submit" class="btn-primary">submit</button>
+    <button type="submit" @click.prevent="save" class="btn-primary">submit</button>
     </form>
 
   </div>
@@ -28,8 +28,13 @@
 
 <script setup lang="ts">
 import { useSettings } from '@/Composables/useSetting';
+import { useNotification } from '@/Composables/usenNotification';
 
 const { notification } = useSettings()
+const {addNotification} =useNotification()
+const save = ()=>{
+  addNotification('Thành coong rồi')}
+
 </script>
 
 <style scoped></style>

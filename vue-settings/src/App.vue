@@ -4,6 +4,7 @@ import type { Tab, TabKey } from './types';
 import TabLink from '@/components/TabLink.vue';
 
 import NotificationSettings from '@/components/NotificationSettings.vue';
+import NotificationList from '@/components/NotificationList.vue';
 import PrivacySettings from '@/components/PrivacySettings.vue';
 import GeneralSettings from '@/components/GeneralSettings.vue';
 import FadeTransition from './components/FadeTransition.vue';
@@ -29,7 +30,7 @@ const currentTab = ref<TabKey>('General');
 
     </nav>
   <FadeTransition><component :is="currentTabComponent "/></FadeTransition>
-
+<NotificationList/>
   </main>
 </template>
 <style scoped>
