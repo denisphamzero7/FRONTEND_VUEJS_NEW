@@ -47,7 +47,6 @@ const closeModal = () => {
   editingCard.value = null
   editingListIndex.value = null
 }
-
 const saveCard = (card: Card) => {
   if (editingListIndex.value === null) return
 
@@ -66,6 +65,7 @@ const saveCard = (card: Card) => {
     if (cardIndex !== -1) {
       lists[editingListIndex.value].cards[cardIndex] = card
     }
+
   }
 }
 </script>

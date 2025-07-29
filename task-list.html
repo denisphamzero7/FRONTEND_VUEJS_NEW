@@ -7,7 +7,7 @@
 </head>
 <body>
   <div id="app">
-  
+  <h1>dùng template ref để thẻ DOM và  focus</h1>
     <input v-model="newTask" placeholder="Task name" @keyup.enter="addTask">
     <select v-model="newPriority">
       <option disabled value="">Priority</option>
@@ -34,16 +34,17 @@
     createApp({
       setup() {
         const STORAGE_KEY = 'tasks';
-        const newTask = ref('');
+        const newTask = ref(null);
         const newPriority = ref('');
         const filterText = ref('');
         const tasks = ref([]);
 
         onMounted(() => {
+          newTask.value.focus();
           const saved = localStorage.getItem(STORAGE_KEY);
           if (saved) tasks.value = JSON.parse(saved);
         });
-
+        
         watch(tasks, () => {
           localStorage.setItem(STORAGE_KEY, JSON.stringify(tasks.value));
         }, { deep: true });

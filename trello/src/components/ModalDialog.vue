@@ -97,12 +97,18 @@ const handleSave = () => {
 }
 </script>
 <!-- <script setup lang="ts">
+import type { Card } from '@/types';
 import { useFocusTrap } from '@vueuse/integrations/useFocusTrap'
 import { nextTick, ref, watch } from 'vue'
 
 const props = defineProps<{
   isOpen: boolean
+
   mode: 'add' | 'edit'
+
+  card:Card|null
+  mode:'add'|'edit'
+
 }>()
 
 const inputTitle = ref<HTMLInputElement | null>(null)
@@ -111,9 +117,9 @@ const modalElement = ref<HTMLElement | null>(null)
 const { activate, deactivate } = useFocusTrap(modalElement)
 
 const emit = defineEmits<{
-  (e: 'close'): void
+  (e: 'close'): void,
+  (e:'save',card:Card):void
 
-}>()
 
 watch(() => props.isOpen, async (isOpen) => {
   if (isOpen) {
